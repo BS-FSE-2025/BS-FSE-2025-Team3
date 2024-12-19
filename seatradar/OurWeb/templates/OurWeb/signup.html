@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="signup-container">
+        <h1>Sign Up</h1>
+        <p>Select your role to create an account</p>
+        <div class="role-selection">
+            <a href="student_signup.html" class="button student">
+                <i class="fas fa-user-graduate"></i> <span>Student</span>
+            </a>
+            <a href="manager_signup.html" class="button manager">
+                <i class="fas fa-book"></i> <span>Library Manager</span>
+            </a>
+            <a href="admin_signup.html" class="button admin">
+                <i class="fas fa-tools"></i> <span>System Administrator</span>
+            </a>
+        </div>
+    </div>
+    <footer>
+        © 2024 SeatRadar | All Rights Reserved
+    </footer>
+</body>
+</html>
