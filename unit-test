@@ -1,0 +1,28 @@
+from django.test import TestCase, Client
+from django.urls import reverse
+from your_app.models import Library
+
+class LastUpdatedLibraryTestCase(TestCase):
+
+    def setUp(self):
+        # Set up a test client
+        self.client = Client()
+
+        # Create a test Library object
+        self.library = Library.objects.create(
+            state='initial state',
+            last_updated='2024-01-01 00:00:00'
+        )
+
+    def test_last_updated_library(self):
+        # Simulate a GET request to the view
+        response = self.client.get(reverse('last_updated_library'))
+
+        # Check that the response is 200 OK
+        self.assertEqual(response.status_code, 200)
+
+        # Check that the correct template was used
+        self.assertTemplateUsed(response, 'library.html')
+
+        # Check that the correct context data was passed to the template
+        self.assertEqual(response.context['last_library'], self.library)
