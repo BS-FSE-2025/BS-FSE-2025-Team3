@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link href="{% static 'style.css' %}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Library Availability</title>
+</head>
+<body>
+    <script src="{% static 'library.js' %}"></script>
+    <div class="container">
+        <h1>Library Availability</h1>
+        <div class="library-list">
+            <div class="library available" onclick="toggleInfo(this)">
+                <h2>ספריה קומה 1 </h2>
+                <p>Status: <span>Available</span></p>
+                <div class="library-info">
+                    <p>Size: 30 m²</p>
+                    <p>Capacity: 20 students</p>
+                </div>
+            </div>
+            <div class="library unavailable" onclick="toggleInfo(this)">
+                <h2>ספריה קומה 0</h2>
+                <p>Status: <span>Unavailable</span></p>
+                <div class="library-info">
+                    <p>Size: 25 m²</p>
+                    <p>Capacity: 15 students</p>
+                </div>
+            </div>
+            <div class="library available" onclick="toggleInfo(this)">
+                <h2>ספריה שקט קומה1</h2>
+                <p>Status: <span>Available</span></p>
+                <div class="library-info">
+                    <p>Size: 40 m²</p>
+                    <p>Capacity: 25 students</p>
+                </div>
+            </div>
+            <div class="library available" onclick="toggleInfo(this)">
+                <h2>ספריה שקט קומה 0</h2>
+                <p>Status: <span>Available</span></p>
+                <div class="library-info">
+                    <p>Size: 35 m²</p>
+                    <p>Capacity: 18 students</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="library.js"></script>
+</body>
+</html>
