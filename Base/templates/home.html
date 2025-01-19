@@ -1,31 +1,46 @@
-
 <!DOCTYPE html>
-<html>
-    <head>
-    <title>firstpage</title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Role</title>
     {% load static %}
-     <link href="{% static 'style.css' %}" rel="stylesheet">
-  </head> 
-</html>
-
+    <link href="{% static 'style.css' %}" rel="stylesheet">
+</head>
 <body>
-    <div class=" main">
-        <div class="nav-buttons">
-            <button onclick="goBack()">Back</button>
-            <button onclick="goNext()">Next</button>
-        </div>
+    <div class="main">
         <div class="firstpage">
-            <form>
-                <a href="singin.html"> 
+            <h2>Select Your Role</h2>
 
-                  <button1 type="button" >admin</button1>
-                  <button1 type="button">library manger</button1>
-                  <button1 type="button">student</button1>
-                </a>
-
-            </form>
+            <!-- Role Selection Buttons -->
+            <div class="role-buttons">
+                <button type="button" onclick="redirectUser('library_manager')">Library Manager</button>
+                <button type="button" onclick="redirectUser('student')">Student</button>
+                <!-- Uncomment the following if 'admin' is a valid role -->
+                <!-- <button type="button" onclick="redirectUser('admin')">Admin</button> -->
+            </div>
         </div>
-
     </div>
+
+    <!-- JavaScript Code for Redirection -->
+    <script>
+        function redirectUser(userType) {
+            let url;
+            switch (userType) {
+                case 'library_manager':
+                    url = '{% url "singin" %}?user_type=library_manager';
+                    break;
+                case 'student':
+                    url = '{% url "singin" %}?user_type=student';
+                    break;
+            
+                default:
+                    alert('Invalid role selected!');
+                    return;
+            }
+            // Redirect to the URL
+            window.location.href = url;
+        }
+    </script>
 </body>
 </html>
