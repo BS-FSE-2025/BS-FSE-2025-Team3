@@ -1,15 +1,26 @@
 from django.contrib import admin
+from .models import CustomUser, StudentProfile, LibraryManagerProfile, Rooms, Item, Library
 
+@admin.register(CustomUser)
+class CustomUserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'email', 'user_type', 'is_active')
 
-# Register your models here.
-from .models import Student
-admin.site.register (Student)
+@admin.register(StudentProfile)
+class StudentProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'field_of_study', 'is_active')
 
-from .models import librarymanager
-admin.site.register(librarymanager)
+@admin.register(LibraryManagerProfile)
+class LibraryManagerProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'library_name')
 
-from .models import Room
-admin.site.register(Room)
+@admin.register(Rooms)
+class RoomsAdmin(admin.ModelAdmin):
+    list_display = ('Closed', 'people')
 
-from .models import Library
-admin.site.register(Library)
+@admin.register(Item)
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description', 'price')
+
+@admin.register(Library)
+class LibraryAdmin(admin.ModelAdmin):
+    list_display = ('state', 'num_students', 'last_updated')

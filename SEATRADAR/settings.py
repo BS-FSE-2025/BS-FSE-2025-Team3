@@ -5,6 +5,19 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+import os
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+LOGIN_URL = '/singin/'  # Redirects to this if login is needed
+LOGIN_REDIRECT_URL = '/student_dashboard/'  # After successful login
+
+# settings.py
+AUTH_USER_MODEL = 'Base.CustomUser'
+
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -111,6 +124,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
 
 
 # Default primary key field type

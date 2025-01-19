@@ -1,40 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-     {% load static %}
-	<title>Seat Radar </title>
-	<link rel="stylesheet" type="text/css" href="slide navbar style.css">
-<link href="{% static 'style.css' %}"  rel="stylesheet">
+    <title>Sign Up & Log In</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-	<div class="main">  	
-		<div class="nav-buttons">
-            <button onclick="goBack()">Back</button>
-            <button onclick="goNext()">Next</button>
+    <div class="main">
+        <input type="checkbox" id="chk" aria-hidden="true">
+
+        <!-- Sign-Up Form -->
+        <div class="signup">
+            <form method="post" action="{% url 'signup' %}" enctype="multipart/form-data">  <!-- Corrected action -->
+                {% csrf_token %}
+                <label for="chk" aria-hidden="true">Sign Up</label>
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password1" placeholder="Password" required>
+                <input type="password" name="password2" placeholder="Confirm Password" required>
+                <!-- Pass user_type -->
+                <label for="user_type">Select Your Role:</label>
+                <select name="user_type" id="user_type" required>
+                    <option value="student">Student</option>
+                    <option value="library_manager">Library Manager</option>
+                </select>
+                <button type="submit">Sign Up</button>
+                {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li style="color: red;">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            </form>
         </div>
-		<input type="checkbox" id="chk" aria-hidden="true">
-
-			<div class="signup">
-				<form>
-					<label for="chk" aria-hidden="true">Sign up</label>
-					<input type="text" name="txt" placeholder="User name" required="">
-					<input type="email" name="email" placeholder="Email" required="">
-                    <input type="password" name="pswd" placeholder="Password" required="">
-					<input type="password" name="pswdcon" placeholder="confirm Password" required="">
-					<button>Sign up</button>
-				</form>
-			</div>
-
-			<div class="login">
-				<form>
-					<label for="chk" aria-hidden="true">Login</label>
-					<input type="email" name="email" placeholder="user name" required="">
-					<input type="password" name="pswd" placeholder="Password" required="">	
-					<button>Login</button>
-					<a href="forgotpassword.html">forgot-password?</a>
-
-				</form>
-			</div>
-	</div>
+    
+        <!-- Log-In Form -->
+        <div class="login">
+            <form method="post" action="{% url 'singin' %}">
+                {% csrf_token %}
+                <label for="chk" aria-hidden="true">Log In</label>
+                <input type="text" name="username" placeholder="Username or Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Log In</button>
+        
+                <!-- Display Error Messages -->
+                {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                            <li style="color: red;">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+        
+                <a href="{% url 'forgotpassword' %}">Forgot Password?</a>
+            </form>
+        </div>
 </body>
 </html>
