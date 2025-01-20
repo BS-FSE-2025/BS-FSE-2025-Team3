@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser, StudentProfile, LibraryManagerProfile, Rooms, Item, Library
+from .models import CustomUser, StudentProfile, LibraryManagerProfile, Rooms, Item, Library 
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
@@ -12,6 +12,7 @@ class StudentProfileAdmin(admin.ModelAdmin):
 @admin.register(LibraryManagerProfile)
 class LibraryManagerProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'library_name')
+
 
 @admin.register(Rooms)
 class RoomsAdmin(admin.ModelAdmin):

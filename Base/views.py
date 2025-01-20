@@ -63,6 +63,29 @@ def singin(request):
         form = AuthenticationForm()
     return render(request, 'singin.html', {'form': form})
 
+
+def admin_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        # Authenticate the user
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            # Check if the user is an admin
+            if user.user_type == 'admin':
+                login(request, user)
+                return redirect('admin_dashboard')  # Redirect to admin dashboard
+            else:
+                # If the user is not an admin, show an error message
+                messages.error(request, 'Access denied. You are not authorized as an admin.')
+        else:
+            # Invalid credentials
+            messages.error(request, 'Invalid username or password.')
+
+    return render(request, 'admin_login.html')
+
 @login_required
 def student_dashboard(request):
     return render(request, 'student_dashboard.html')
@@ -70,6 +93,12 @@ def student_dashboard(request):
 @login_required
 def library_manager_dashboard(request):
     return render(request, 'library_manager_dashboard.html')
+
+@login_required
+def admin_dashboard(request):
+    if request.user.user_type != 'admin':
+        return redirect('admin_login')  # Restrict access if the user is not an admin
+    return render(request, 'admin_dashboard.html')
 
 @login_required
 def edit_profile(request):

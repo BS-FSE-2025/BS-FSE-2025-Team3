@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <nav>
+        <h1>SeatRadar Admin Dashboard</h1>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#sensors">Sensors</a></li>
+            <li><a href="#rooms">Rooms</a></li>
+            <li><a href="#library-hours">Library Hours</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section id="overview">
+            <h2>System Overview</h2>
+            <p>Display key metrics and summaries here.</p>
+        </section>
+        <section id="sensors">
+            <h2>Sensor Management</h2>
+            <!-- Dynamic table with sensor statuses -->
+        </section>
+        <section id="rooms">
+            <h2>Room Management</h2>
+            <!-- Room occupancy and limits management -->
+        </section>
+        <section id="library-hours">
+            <h2>Library Hours</h2>
+            <!-- Form to manage library hours -->
+        </section>
+    </main>
+</body>
+</html>

@@ -12,6 +12,7 @@ class CustomUser(AbstractUser):
     USER_TYPE_CHOICES = (
         ('student', 'Student'),
         ('library_manager', 'Library Manager'),
+        ('admin', 'Admin'),
     )
     user_type = models.CharField(max_length=50, choices=USER_TYPE_CHOICES, null=False)
     profile_photo = models.ImageField(upload_to='profile_photos/', blank=True, null=True)
@@ -34,6 +35,8 @@ class CustomUser(AbstractUser):
             return '/student_dashboard/'
         elif self.user_type == 'library_manager':
             return '/library_manager_dashboard/'
+        elif self.user_type == 'admin':
+            return '/admin_dashboard/'
         return '/'
 
     def __str__(self):
@@ -58,6 +61,15 @@ class LibraryManagerProfile(models.Model):
 
     def __str__(self):
         return f"Library Manager: {self.user.username}"
+    
+    # Admin Profile Model
+class AdminProfile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='admin_profile')
+    department = models.CharField(max_length=255, blank=True, null=True)  # Optional department field
+    contact_number = models.CharField(max_length=15, blank=True, null=True)  # Optional contact number
+
+    def __str__(self):
+        return f"Admin: {self.user.username} (Department: {self.department or 'N/A'})"
 
 
 # Consolidated Signal for Profile Management
@@ -72,7 +84,8 @@ def create_or_update_profile(sender, instance, created, **kwargs):
             StudentProfile.objects.get_or_create(user=instance)
         elif instance.user_type == 'library_manager':
             LibraryManagerProfile.objects.get_or_create(user=instance)
-
+        elif instance.user_type == 'admin':
+           AdminProfile.objects.get_or_create(user=instance)
 
 # Rooms Model
 class Rooms(models.Model):
@@ -102,3 +115,7 @@ class Library(models.Model):
 
 
 
+class Sensor(models.Model):
+    location = models.CharField(max_length=255)
+    status = models.CharField(max_length=50, choices=[('active', 'Active'), ('inactive', 'Inactive')])
+    last_checked = models.DateTimeField(auto_now=True)

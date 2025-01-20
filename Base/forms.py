@@ -10,6 +10,12 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ('username', 'email', 'password1', 'password2' , 'user_type')
+
+    def clean_user_type(self):
+        user_type = self.cleaned_data.get('user_type')
+        if user_type == 'admin':
+            raise forms.ValidationError("You cannot sign up as an admin.")
+        return user_type
         
 
 # Login form
@@ -26,3 +32,4 @@ class ProfileEditForm(forms.ModelForm):
         widgets = {
             'profile_photo': forms.FileInput(attrs={'accept': 'image/*'}),
         }
+
