@@ -8,31 +8,86 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <div class="main">
-        <h2>Edit Your Profile</h2>
+    <div class="main-container">
+        <div class="form-container">
+            <h2 class="form-title">Edit Your Profile</h2>
 
-        <!-- Profile Edit Form -->
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn-save">Save Changes</button>
-        </form>
+            <!-- Edit Profile Form -->
+            <form method="post" enctype="multipart/form-data" class="edit-profile-form">
+                {% csrf_token %}
 
-        <!-- Dynamic Navigation Links -->
-        <div class="navigation-links">
-            {% if user.user_type == 'library_manager' %}
-                <a href="{% url 'library_manager_dashboard' %}" class="btn-back">Back to Library Manager Dashboard</a>
-            {% elif user.user_type == 'student' %}
-                <a href="{% url 'student_dashboard' %}" class="btn-back">Back to Student Dashboard</a>
-            {% else %}
-                <a href="{% url 'home' %}" class="btn-back">Back to Home</a>
-            {% endif %}
+                <!-- Profile Picture Section -->
+                <div class="profile-picture-container">
+                    <img 
+                        src="{% if user.profile_photo %}{{ user.profile_photo.url }}{% else %}{% static 'default-profile.jpg' %}{% endif %}" 
+                        alt="Profile Picture" 
+                        id="profilePicturePreview" 
+                        class="profile-picture">
+            
+                </div>
+
+                <!-- Update Profile Fields -->
+                <div class="form-fields">
+                    <h3>Update Profile</h3>
+                    {{ profile_form.as_p }}
+                </div>
+
+                <!-- Submit Profile Changes -->
+                <button type="submit" class="btn-save">Save Profile Changes</button>
+            </form>
+
+            <!-- Password Change Form -->
+            <form method="post" class="password-change-form">
+                {% csrf_token %}
+                <h3>Change Password</h3>
+                   {{ password_form.as_p }}  
+                <!-- Submit Password Changes -->
+                <button type="submit" class="btn-save">Change Password</button>
+
+                 {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                            <li style="color: red;">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </form>
+
+            <!-- Navigation Links -->
+            <div class="navigation-links">
+                {% if user.user_type == 'library_manager' %}
+                    <a href="{% url 'library_manager_dashboard' %}" class="btn-back">Back to Library Manager Dashboard</a>
+                {% elif user.user_type == 'student' %}
+                    <a href="{% url 'student_dashboard' %}" class="btn-back">Back to Student Dashboard</a>
+                {% else %}
+                    <a href="{% url 'home' %}" class="btn-back">Back to Home</a>
+                {% endif %}
+            </div>
         </div>
     </div>
 
-    <!-- Optional Footer -->
+    <!-- Footer -->
     <footer>
         <p>&copy; {{ current_year }} SeatRadar. All rights reserved.</p>
     </footer>
+
+    <!-- JavaScript for Profile Picture Preview -->
+    <script>
+        function previewProfilePicture() {
+            const fileInput = document.getElementById('profilePicture');
+            const previewImage = document.getElementById('profilePicturePreview');
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+
+        // Attach the event listener to the file input
+        document.getElementById('profilePicture').addEventListener('change', previewProfilePicture);
+    </script>
 </body>
 </html>

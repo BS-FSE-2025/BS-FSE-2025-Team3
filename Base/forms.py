@@ -26,10 +26,25 @@ class LoginForm(AuthenticationForm):
 
     
 class ProfileEditForm(forms.ModelForm):
-     class Meta:
+    class Meta:
         model = CustomUser
-        fields = ['first_name', 'last_name', 'email', 'username', 'profile_photo']  # Fields for profile editing
+        fields = ['first_name', 'last_name', 'email', 'username', 'profile_photo']
         widgets = {
-            'profile_photo': forms.FileInput(attrs={'accept': 'image/*'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your first name'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your last name'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter your email'}),
+            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your username'}),
+            'profile_photo': forms.FileInput(attrs={'class': 'form-control-file', 'accept': 'image/*'}),
         }
 
+    def clean_profile_photo(self):
+        photo = self.files.get('profile_photo')  # Access the file from the request.FILES dictionary
+        if photo:
+            # Check file size
+            if photo.size > 5 * 1024 * 1024:  # 5MB limit
+                raise forms.ValidationError("The uploaded file is too large (max 5MB).")
+
+            # Check file type
+            if not photo.content_type.startswith('image/'):
+                raise forms.ValidationError("Invalid file type. Please upload an image.")
+        return photo

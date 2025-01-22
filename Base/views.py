@@ -9,13 +9,13 @@ from django.contrib.auth import get_user_model
 from .models import Rooms, Item, Library, StudentProfile, LibraryManagerProfile
 from .forms import SignUpForm, ProfileEditForm
 import logging
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+
 
 logger = logging.getLogger(__name__)
 
 User = get_user_model()  # Use Django's custom user model
-
-def home(request):
-    return render(request, 'home.html')
 
 def library_items(request):
     library = Library.objects.all()
@@ -25,6 +25,9 @@ def library_items(request):
 def item_list(request):
     items = Item.objects.all()
     return render(request, 'Item.html', {'items': items})
+
+def home(request):
+    return render(request, 'home.html')
 
 def signup(request):
     if request.method == 'POST':
@@ -100,20 +103,38 @@ def admin_dashboard(request):
         return redirect('admin_login')  # Restrict access if the user is not an admin
     return render(request, 'admin_dashboard.html')
 
+
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
-        form = ProfileEditForm(request.POST, request.FILES, instance=request.user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Your profile was updated successfully.")
-            redirect_url = 'student_dashboard' if request.user.user_type == 'student' else 'library_manager_dashboard'
-            return redirect(redirect_url)
-        else:
-            messages.error(request, "Error updating your profile.")
+        # Profile form for updating user information
+        profile_form = ProfileEditForm(request.POST, request.FILES, instance=request.user)
+        password_form = PasswordChangeForm(request.user, request.POST)
+
+        if profile_form.is_valid():
+            profile_form.save()
+            messages.success(request, "Your profile has been updated successfully!")
+
+        # Check if the password form is valid
+        if password_form.is_valid():
+            user = password_form.save()  # Save the new password in the database
+            update_session_auth_hash(request, user)  # Keep the user logged in after the password change
+            messages.success(request, "Your password has been updated successfully!")
+            return redirect('edit_profile')  # Redirect to avoid resubmission
+        elif password_form.has_changed():  # Show an error if the user attempted to change the password but failed
+            messages.error(request, "Password change failed. Please correct the errors below.")
+
     else:
-        form = ProfileEditForm(instance=request.user)
-    return render(request, 'edit_profile.html', {'form': form})
+        # Initialize forms for GET requests
+        profile_form = ProfileEditForm(instance=request.user)
+        password_form = PasswordChangeForm(request.user)
+
+    # Render the forms in the template
+    return render(request, 'edit_profile.html', {
+        'profile_form': profile_form,
+        'password_form': password_form,
+    })
+
 
 def forgotpassword(request):
     return render(request, 'forgotpassword.html')
@@ -134,4 +155,4 @@ def update_library_state(request):
             return redirect('last_updated_library')
         else:
             messages.error(request, "No library data found to update.")
-    return HttpResponse("Invalid request", status=400)
+    return HttpResponse("Invalid request",status=400)

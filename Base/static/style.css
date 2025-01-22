@@ -335,3 +335,198 @@ table tr:nth-child(even) {
         padding: 15px;
     }
 }
+/* General Page Styles */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+    color: #fff;
+}
+
+/* Main Container */
+.main-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    width: 400px;
+    text-align: center;
+}
+
+/* Profile Picture Container */
+.profile-picture-container {
+    position: relative;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.upload-button {
+    margin-top: 10px;
+    display: inline-block;
+    background-color: #ffcc00;
+    color: #131a3a;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.upload-button:hover {
+    background-color: #ffc107;
+}
+
+/* Form Title */
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #ffcc00;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-size: 1rem;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"] {
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #e0dede;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Save Button */
+.btn-save {
+    background-color: #ffcc00;
+    color: #131a3a;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-save:hover {
+    background-color: #ffc107;
+    box-shadow: 0 4px 10px rgba(255, 193, 7, 0.5);
+}
+
+/* Navigation Links */
+.navigation-links {
+    margin-top: 20px;
+}
+
+.navigation-links a {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: #f1f1ee;
+    transition: color 0.3s;
+}
+
+.navigation-links a:hover {
+    color: #ffffff;
+}
+
+/* Footer Styles */
+footer {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+}
+
+h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #ffd700;
+}
+
+.form-fields {
+    margin-bottom: 20px;
+}
+
+.form-fields input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.btn-save {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-save:hover {
+    background-color: #218838;
+}
+
+
+
+h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #ffd700;
+}
+
+.password-change-form {
+    margin-top: 20px;
+}
+
+.btn-save {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-save:hover {
+    background-color: #218838;
+}
