@@ -9,13 +9,15 @@ body {
     background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
 }
 
+}/* Main Container */
 .main {
     width: 400px;
-    height: 550px; /* Increased height to accommodate buttons */
+    height: 700px; /* Increased height for added space */
     overflow: hidden;
-    background: url("https://your-background-image-url.com") no-repeat center / cover;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     box-shadow: 5px 20px 50px #000000;
+    text-align: center;
 }
 
 .signup {
