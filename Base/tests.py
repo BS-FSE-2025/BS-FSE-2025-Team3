@@ -98,3 +98,12 @@ class ViewTests(TestCase):
         self.assertEqual(response.status_code, 302)  # Check for redirect status code
         self.assertTrue(CustomUser.objects.get(username='student').check_password('newpassword123'))
         self.assertRedirects(response, reverse('edit_profile'))  # Check redirection URL
+
+
+
+   def test_login_view_post_invalid_user(self):
+      data = {'username': 'unknown_user', 'password': 'password123'}
+      response = self.client.post(reverse('singin'), data)
+      self.assertEqual(response.status_code, 200)
+      self.assertTemplateUsed(response, 'singin.html')
+      self.assertContains(response, 'Please enter a correct username and password.')  # Assuming your template shows this message for invalid login attempts
