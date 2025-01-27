@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link href="{% static 'style.css' %}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Availability</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Room Availability</h1>
+        <div class="Availablerooms">
+            {% for room in rooms %}
+                <div class="room {% if room.Closed == 'Unavailable' %}unavailable{% else %}available{% endif %}" onclick="toggleInfo(this)">
+                    <h2>{{ room.name }}</h2>
+                    <p>Status: <span>{{ room.get_Closed_display }}</span></p>
+                    <div class="room-info">
+                        <p>Capacity: {{ room.people }} people</p>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No rooms available.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
+
+</html>

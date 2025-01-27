@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Student Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="profile-pic-container">
+                <!-- Display profile photo -->
+                {% if user.profile_photo %}
+                    <img src="{{ user.profile_photo.url }}" alt="Profile Picture" class="profile-pic">
+                {% else %}
+                    <img src="{% static 'default-profile.png' %}" alt="Default Profile Picture" class="profile-pic">
+                {% endif %}
+                <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                <p>{{ user.email }}</p>
+                <a href="{% url 'edit_profile' %}" class="edit-profile-btn">Edit Profile</a>
+               
+            </div>
+        </div>
+
+    
+        <!-- Content Section -->
+        <div class="content">
+            <h1>Welcome, {{ user.first_name }}!</h1>
+            <p>This is your student dashboard. Here you can access your information and manage your profile.</p>
+            <ul class="dashboard-links">
+                <li><a href="{% url 'Availablerooms' %}">Check Room Availability</a></li>
+
+            </ul>
+            <!-- Flexbox Container for the Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- First Image Block -->
+                <div class="image-block" style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                    <h1 style="margin-right: 280px;">Library</h1>
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <img src="https://th.bing.com/th/id/OIP.g9D2GWyLDwZ8kEQxoR5dEQHaFj?w=229&h=180&c=7&r=0&o=5&pid=1.7" width="120">
+                        <p><strong>Net Count (Up - Down):</strong> <span id="net1">0</span></p>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <img src="https://th.bing.com/th/id/OIP.g9D2GWyLDwZ8kEQxoR5dEQHaFj?w=229&h=180&c=7&r=0&o=5&pid=1.7" width="120">
+                        <p><strong>Net Count (Up - Down):</strong> <span id="net2">0</span></p>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <img src="https://th.bing.com/th/id/OIP.g9D2GWyLDwZ8kEQxoR5dEQHaFj?w=229&h=180&c=7&r=0&o=5&pid=1.7" width="120">
+                        <p><strong>Net Count (Up - Down):</strong> <span id="net3">0</span></p>
+                    </div>
+                </div>
+
+                <!-- Latest Library Hours (On the Right Side) -->
+                <div class="latest-hours"><p>
+                    <h1>Latest Library Hours</h1></p>
+                    {% if last_updated_hour %}
+                    <p>
+                        <strong>Day:</strong> {{ last_updated_hour.day_of_week }}<br>
+                        <strong>Opening Time:</strong> {{ last_updated_hour.opening_time }}<br>
+                        <strong>Closing Time:</strong> {{ last_updated_hour.closing_time }}
+                    </p>
+                    {% else %}
+                    <p>No library hours have been updated yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Contact Us Section -->
+            <div class="contact-container">
+                <p><a href="mailto:shahedalhwashla20@gmail.com?subject=Contact%20Request&body=Hello,%20I%20need%20help%20with..."
+                   class="custom-button">Contact Us</a></p>
+            </div>
+
+            <style>
+                .custom-button {
+                    display: inline-block;
+                    background-color: #573b8a;
+                    color: white;
+                    padding: 10px 20px;
+                    text-decoration: none;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    text-align: center;
+                }
+                .custom-button:hover {
+                    background-color: #452b6e;
+                }
+
+                /* Flexbox styling for the dashboard content */
+                .dashboard-content {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    gap: 40px;
+                }
+
+                .image-block {
+                    flex: 1;
+                }
+
+                .latest-hours {
+                    flex: 1;
+                    padding: 20px;
+                    background-color: #573b8a;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                }
+            </style>
+        </div>
+    </div>
+</body>
+</html>

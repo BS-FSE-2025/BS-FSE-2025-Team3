@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Library Manager Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+   
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="profile-pic-container">
+                <!-- Display profile photo -->
+                {% if user.profile_photo %}
+                    <img src="{{ user.profile_photo.url }}" alt="Profile Picture" class="profile-pic">
+                {% else %}
+                    <img src="{% static 'default-profile.png' %}" alt="Default Profile Picture" class="profile-pic">
+                {% endif %}
+                <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                <p>{{ user.email }}</p>
+                <a href="{% url 'edit_profile' %}" class="edit-profile-btn">Edit Profile</a>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="{% url 'update_hours' %}">Update Library State</a></li>
+                <li><a href="{% url 'update_room_availability' %}">Update study rooms</a></li>
+            </ul>
+        </div>
+
+
+        <!-- Content Section -->
+        <div class="dashboard-options">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                <h1 style="margin-right: 280px;">Library</h1>
+                
+                <!-- First Row -->
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <img src="https://th.bing.com/th/id/OIP.g9D2GWyLDwZ8kEQxoR5dEQHaFj?w=229&h=180&c=7&r=0&o=5&pid=1.7" width="120">
+                    <p><strong>Net Count (Up - Down):</strong> <span id="net1">0</span></p>
+                </div>
+                
+                <!-- Second Row -->
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <img src="https://th.bing.com/th/id/OIP.g9D2GWyLDwZ8kEQxoR5dEQHaFj?w=229&h=180&c=7&r=0&o=5&pid=1.7" width="120">
+                    <p><strong>Net Count (Up - Down):</strong> <span id="net2">0</span></p>
+                </div>
+                
+                <!-- Third Row -->
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <img src="https://th.bing.com/th/id/OIP.g9D2GWyLDwZ8kEQxoR5dEQHaFj?w=229&h=180&c=7&r=0&o=5&pid=1.7" width="120">
+                    <p><strong>Net Count (Up - Down):</strong> <span id="net3">0</span></p>
+                </div>
+            </div>
