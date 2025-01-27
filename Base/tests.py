@@ -101,9 +101,9 @@ class ViewTests(TestCase):
 
 
 
-   def test_login_view_post_invalid_user(self):
-      data = {'username': 'unknown_user', 'password': 'password123'}
-      response = self.client.post(reverse('singin'), data)
-      self.assertEqual(response.status_code, 200)
-      self.assertTemplateUsed(response, 'singin.html')
-      self.assertContains(response, 'Please enter a correct username and password.')  # Assuming your template shows this message for invalid login attempts
+    def test_login_view_post_invalid_user(self):
+       data = {'username': 'unknown_user', 'password': 'password123'}
+       response = self.client.post(reverse('singin'), data)
+       self.assertEqual(response.status_code, 200)
+       self.assertTemplateUsed(response, 'singin.html')
+       self.assertContains(response, 'Please enter a correct username and password.')  # Assuming your template shows this message for invalid login attempts
