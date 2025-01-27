@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.utils.timezone import now
+from django.contrib.auth import logout
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
@@ -11,7 +12,32 @@ from .forms import SignUpForm, ProfileEditForm
 import logging
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.http import StreamingHttpResponse
+from django.shortcuts import render
+from django.http import JsonResponse, StreamingHttpResponse
+from .opencv_stream import generate_frames, get_people_count  # OpenCV scripts
 
+
+def user_logout(request):
+    """Logs out the user and redirects to the login page"""
+    logout(request)
+    return redirect('singin')  # Redirects to the login page after logout
+
+# Fix: Correct template file and pass Up, Down, and Net counts
+def index(request):
+    up_count, down_count = get_people_count()
+    net_count = up_count - down_count  # Compute Net Count (Up - Down)
+    return render(request, 'index.html', {"up": up_count, "down": down_count, "net": net_count})
+
+# Fix: Ensure real-time updates for the Net Count
+def get_counter_data(request):
+    up_count, down_count = get_people_count()
+    net_count = up_count - down_count
+    return JsonResponse({'up_count': up_count, 'down_count': down_count, 'net_count': net_count})
+
+# Fix: Ensure the video stream works correctly
+def video_feed(request):
+    return StreamingHttpResponse(generate_frames(), content_type="multipart/x-mixed-replace; boundary=frame")
 
 logger = logging.getLogger(__name__)
 
@@ -91,8 +117,10 @@ def admin_login(request):
 
 @login_required
 def student_dashboard(request):
-    return render(request, 'student_dashboard.html')
-
+    """ Passes counter data to the student dashboard """
+    up_count, down_count = get_people_count()
+    net_count = up_count - down_count
+    return render(request, 'student_dashboard.html', {"up": up_count, "down": down_count, "net": net_count})
 @login_required
 def library_manager_dashboard(request):
     return render(request, 'library_manager_dashboard.html')
@@ -156,3 +184,9 @@ def update_library_state(request):
         else:
             messages.error(request, "No library data found to update.")
     return HttpResponse("Invalid request",status=400)
+def map (request):
+ return render (request,'map.html')
+
+def test(request):
+ return render (request,'test.html')
+

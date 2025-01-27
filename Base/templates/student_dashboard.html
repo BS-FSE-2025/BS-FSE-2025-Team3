@@ -4,6 +4,27 @@
     <title>Student Dashboard</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <meta http-equiv="refresh" content="5"> <!-- Auto-refresh every 5 seconds -->
+  
+       <script>
+        function updateCounters() {
+            fetch('/get_counter_data/')  // Fetch real-time counter data
+                .then(response => response.json())
+                .then(data => {
+                    // Update the main counter
+                    document.getElementById('up_count').textContent = data.up_count;
+                    document.getElementById('down_count').textContent = data.down_count;
+                    document.getElementById('net_count').textContent = data.net_count;
+
+                    
+                })
+                .catch(error => console.error('Error fetching counter data:', error));
+        }
+
+        // Fetch new data every 5 seconds
+        setInterval(updateCounters, 5000);
+    </script>
+    
 </head>
 <body>
     <div class="dashboard-container">
@@ -19,19 +40,53 @@
                 <h3>{{ user.first_name }} {{ user.last_name }}</h3>
                 <p>{{ user.email }}</p>
                 <a href="{% url 'edit_profile' %}" class="edit-profile-btn">Edit Profile</a>
+                <p></p>
+               
             </div>
+            <a style="margin-top: 600px;" href="{% url 'logout' %}" class="logout-btn">Logout</a>
+           
         </div>
 
         <!-- Content Section -->
         <div class="content">
             <h1>Welcome, {{ user.first_name }}!</h1>
             <p>This is your student dashboard. Here you can access your information and manage your profile.</p>
-
-            <!-- Example Dashboard Content -->
             <div class="dashboard-options">
-                <button>Library Resources</button>
-                <button>Available Rooms</button>
-                <button>Manage Reservations</button>
+               
+                
+               <!-- First Image Block -->
+               <div  sstyle="display: flex; flex-direction: column; align-items: flex-end; gap: 20px; margin-left: auto; width: fit-content;">
+                <a  href= "map.html" style="margin-right: 280px;"><h1 style="color: aliceblue;">library</h1> </a>
+              
+                <div id="counter" style="display: flex; align-items: center; gap: 10px;">
+                        
+                    <img src="https://th.bing.com/th/id/OIP.g9D2GWyLDwZ8kEQxoR5dEQHaFj?w=229&h=180&c=7&r=0&o=5&pid=1.7" width="200">
+                    <div id="main_counter">
+                        <p><strong>inside:</strong> <span id="net_count">{{ net }}</span></p>
+                    </div>
+                </div>
+                <p></p>
+                <h1 style="margin-right: 280px;">מרחב מוגן</h1>
+                <div style="display: flex; align-items: center; gap: 10px;">
+
+                    <img src="https://th.bing.com/th/id/OIP.g9D2GWyLDwZ8kEQxoR5dEQHaFj?w=229&h=180&c=7&r=0&o=5&pid=1.7" width="200">
+                    <p><strong>inside:</strong> <span id="net2">11</span></p>
+                </div>
+                <p></p>
+                <h1 style="margin-right: 280px;">מרחב מוגן</h1>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="https://th.bing.com/th/id/OIP.g9D2GWyLDwZ8kEQxoR5dEQHaFj?w=229&h=180&c=7&r=0&o=5&pid=1.7" width="200">
+                    <p><strong>inside:</strong> <span id="net3">13</span></p>
+                </div>
+                <p></p>
+
+                
+                
+            </div>
+            
+            
+        
+                
             </div>
         </div>
     </div>

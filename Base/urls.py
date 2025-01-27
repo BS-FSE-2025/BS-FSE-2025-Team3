@@ -19,7 +19,12 @@ path('admin_dashboard,html/', views.admin_dashboard, name='admin_dashboard'),
 path('student_dashboard.html/', views.student_dashboard, name='student_dashboard'),
 path('library_manager_dashboard.html/', views.library_manager_dashboard, name='library_manager_dashboard'),
 path('edit_profile.html/', views.edit_profile, name='edit_profile'),
-
-
+path('student_dashboard.html/map.html/',views.map,name='map'),
+path('', views.index, name='index'),
+path('video_feed/', views.video_feed, name='video_feed'),
+path('test.html/', views.get_counter_data, name='get_counter_data'),
+path('logout/', views.user_logout, name='logout'),
 
 ]
+
+

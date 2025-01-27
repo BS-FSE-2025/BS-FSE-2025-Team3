@@ -9,13 +9,15 @@ body {
     background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
 }
 
+/* Main Container */
 .main {
     width: 400px;
-    height: 550px; /* Increased height to accommodate buttons */
+    height: 700px; /* Increased height for added space */
     overflow: hidden;
-    background: url("https://your-background-image-url.com") no-repeat center / cover;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     box-shadow: 5px 20px 50px #000000;
+    text-align: center;
 }
 
 .signup {
@@ -529,4 +531,25 @@ h3 {
 
 .btn-save:hover {
     background-color: #218838;
+}
+.dashboard-options {
+    overflow-y: auto; /* Enables scrolling */
+    max-height: 90vh;
+    justify-items: right; /* Limits height to 90% of the screen */
+}
+.dashboard-options {
+    min-height: 200vh; /* Increase height */
+}
+.logout-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #d9534f;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.logout-btn:hover {
+    background-color: #c9302c;
 }
