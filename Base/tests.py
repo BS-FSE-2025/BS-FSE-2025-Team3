@@ -161,3 +161,44 @@ class ViewTests(TestCase):
         self.room.refresh_from_db()
         self.assertEqual(self.room.Closed, "Closed")
         self.assertEqual(self.room.people, 8)
+
+###---בדיקת יחידה לשחזור הסיסמה----###
+from django.test import TestCase, Client
+from django.urls import reverse
+from django.contrib.auth import get_user_model
+from django.core import mail
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.contrib.auth.tokens import default_token_generator  # ייבוא המחולל טוקנים
+
+class PasswordResetTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = get_user_model().objects.create_user(
+            username='testuser',
+            email='test@example.com',
+            password='password123'
+        )
+
+    def test_request_password_reset_valid_email(self):
+        response = self.client.post(reverse('forgotpassword'), {'email': 'test@example.com'})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(len(mail.outbox), 1)
+        
+    def test_request_password_reset_invalid_email(self):
+        response = self.client.post(reverse('forgotpassword'), {'email': 'invalid@example.com'})
+        self.assertEqual(response.status_code, 302)
+
+    def test_password_reset_confirm_valid_token(self):
+        self.client.logout()  # ודא שהמשתמש לא מחובר
+        token = default_token_generator.make_token(self.user)  # יצירת טוקן לשחזור סיסמה
+        uid = urlsafe_base64_encode(force_bytes(self.user.pk))
+        response = self.client.get(reverse('password_reset_confirm', kwargs={'uidb64': uid, 'token': token}))
+        self.assertEqual(response.status_code, 302)
+
+    def test_password_reset_confirm_invalid_token(self):
+        self.client.logout()  # ודא שהמשתמש לא מחובר
+        uid = urlsafe_base64_encode(force_bytes(self.user.pk))
+        response = self.client.get(reverse('password_reset_confirm', kwargs={'uidb64': uid, 'token': 'invalid-token'}))
+        self.assertEqual(response.status_code, 200)
+
