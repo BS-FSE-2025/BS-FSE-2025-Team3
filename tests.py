@@ -41,7 +41,7 @@ class ViewTests(TestCase):
 
   
     def test_update_room(self):
-        response = self.client.post(reverse("update_rooms"), {
+        response = self.client.post(reverse("update_room_availability"), {
             "action": "update_rooms",
             f"room_id_{self.room.id}": self.room.id,
             f"room_status_{self.room.id}": "Closed",
