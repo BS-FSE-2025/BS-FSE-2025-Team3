@@ -140,7 +140,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Backend לשל�
 EMAIL_HOST = 'smtp.gmail.com'  # השרת של Gmail
 EMAIL_PORT = 587  # פורט SMTP ל-Gmail
 EMAIL_USE_TLS = True  # האם להשתמש בהצפנה TLS
-EMAIL_HOST_USER = 'safaa0bnt0aboha@gmail.com'  # כתובת המייל שלך ב-Gmail
+EMAIL_HOST_USER = 'a@gmail.com'  # כתובת המייל שלך ב-Gmail
 EMAIL_HOST_PASSWORD = 'snqjthxyyzydhcnm'  # הסיסמה שלך ב-Gmail (השתמש ב-App Password אם יש לך 2FA פעיל)
 DEFAULT_FROM_EMAIL = 'seatradar@no-reply.com'  # כתובת המייל שתשלח את ההודעות
 
